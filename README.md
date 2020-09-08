@@ -1,6 +1,7 @@
 # docker-cpp-base
+![GitHub Actions](https://github.com/kost13/docker-cpp-base/workflows/docker-cpp-base-ci/badge.svg)
 
-Simple Docker image with basic tools for C++ applications development.
+A simple Docker image with basic tools for C++ applications development.
 
 ### Installed software
 base image: [debian](https://hub.docker.com/_/debian)  
