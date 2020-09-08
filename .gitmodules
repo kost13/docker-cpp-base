@@ -1,0 +1,3 @@
+[submodule "tern-to-markdown"]
+	path = tools/tern-to-markdown
+	url = git@github.com:kost13/tern-to-markdown.git

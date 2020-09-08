@@ -1,0 +1,42 @@
+name: docker-cpp-base-ci
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  update_img_info:
+    name: Update Docker Image packages information
+    runs-on: ubuntu-latest
+        
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+            submodules: true
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+            python-version: '3.6'
+      - name: Build Docker image
+        run: docker build . -t cpp-base:latest
+      - name: Generate Tern report
+        uses: philips-labs/tern-action@v1.0.0
+        with:
+          image: cpp-base:latest
+          format: yaml
+          output: out.yaml
+      - name: Update image information
+        run: ./tools/update_image_description.sh out.yaml
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md packages.md
+          git commit -m "Auto update packages information"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+
